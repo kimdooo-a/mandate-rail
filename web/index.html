@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MandateRail</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <strong>MandateRail</strong>
+      <span class="sub">spending mandates for purchasing agents · tUSD8 on QDay Aevum</span>
+    </div>
+    <button id="connect">Connect wallet</button>
+  </header>
+
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <section class="card" id="cfg">
+    <h2>Network</h2>
+    <div class="grid">
+      <label>RPC <input id="rpc" value="https://rpc-test.qday.info" /></label>
+      <label>MandateVault <input id="vault" placeholder="0x…" /></label>
+      <label>Scan from block <input id="fromBlock" value="0" inputmode="numeric" /></label>
+    </div>
+    <button id="load">Load</button>
+    <p class="hint">Chain <span id="chainId">—</span> · token <span id="token">—</span> · you <span id="me">not connected</span></p>
+  </section>
+
+  <section class="card">
+    <h2>Vault balance</h2>
+    <div class="stats">
+      <div><span class="k">Free</span><span class="v" id="free">—</span></div>
+      <div><span class="k">In escrow</span><span class="v" id="escrow">—</span></div>
+      <div><span class="k">Wallet</span><span class="v" id="wallet">—</span></div>
+    </div>
+    <div class="row">
+      <input id="depAmt" placeholder="amount" inputmode="decimal" />
+      <button id="deposit">Approve &amp; deposit</button>
+      <button id="withdraw" class="ghost">Withdraw</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Grant a mandate</h2>
+    <div class="grid">
+      <label>Agent address <input id="mAgent" placeholder="0x…" /></label>
+      <label>Per-payment cap <input id="mCap" value="500" inputmode="decimal" /></label>
+      <label>Budget per period <input id="mBudget" value="1200" inputmode="decimal" /></label>
+      <label>Period (hours) <input id="mPeriod" value="24" inputmode="numeric" /></label>
+      <label>Valid for (days) <input id="mDays" value="30" inputmode="numeric" /></label>
+      <label>Cooling-off (minutes) <input id="mCool" value="60" inputmode="numeric" /></label>
+      <label class="wide">Merchant allowlist (comma separated) <input id="mMerchants" placeholder="0x…, 0x…" /></label>
+    </div>
+    <button id="grant">Grant mandate</button>
+  </section>
+
+  <section class="card">
+    <h2>My mandates</h2>
+    <div id="mandates" class="list"><p class="hint">Load a vault to see mandates.</p></div>
+  </section>
+
+  <section class="card">
+    <h2>Receipts</h2>
+    <p class="hint">Every payment is a receipt keyed by the invoice's EIP-712 digest. Escrowed payments can be clawed back until the cooling-off ends; after that anyone can release them.</p>
+    <div id="receipts" class="list"></div>
+  </section>
+
+  <section class="card">
+    <h2>Pre-flight an invoice</h2>
+    <p class="hint">Paste a merchant-signed invoice file. The vault's own <code>check()</code> answers exactly what <code>pay()</code> would do — nothing is sent.</p>
+    <div class="grid">
+      <label>Mandate id <input id="pfMandate" value="1" inputmode="numeric" /></label>
+      <label>Agent address <input id="pfAgent" placeholder="0x…" /></label>
+    </div>
+    <textarea id="pfJson" rows="8" placeholder='{"humanRef":"INV-…","invoice":{…},"signature":"0x…"}'></textarea>
+    <button id="preflight">Check</button>
+    <div id="pfOut"></div>
+  </section>
+
+  <footer>Contracts: Solidity 0.8.28 (EVM shanghai) · OpenZeppelin 5.1 · viem. Test tokens only.</footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

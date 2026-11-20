@@ -1,0 +1,21 @@
+{
+  "name": "mandate-rail",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Spending mandates for autonomous purchasing agents, settled in tUSD8 on QDay Aevum.",
+  "license": "MIT",
+  "scripts": {
+    "build": "forge build && node web/build-abi.mjs",
+    "test": "forge test && node --test web/model.test.mjs agent/agent.e2e.test.mjs",
+    "test:sol": "forge test",
+    "test:js": "node --test web/model.test.mjs agent/agent.e2e.test.mjs",
+    "demo:local": "node demo/local-e2e.mjs",
+    "agent": "node agent/agent.mjs",
+    "sign-invoice": "node merchant/sign-invoice.mjs",
+    "web": "node web/serve.mjs"
+  },
+  "dependencies": {
+    "viem": "2.58.2"
+  }
+}

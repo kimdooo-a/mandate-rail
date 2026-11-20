@@ -1,0 +1,25 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.28"
+# Aevum testnet (cdk-erigon) accepts PUSH0 but rejects Cancun opcodes
+# (TSTORE/TLOAD/MCOPY/BLOBHASH/BLOBBASEFEE) — probed via eth_call on 2026-11-21.
+evm_version = "shanghai"
+optimizer = true
+optimizer_runs = 200
+fs_permissions = [{ access = "read", path = "./out" }]
+
+[fuzz]
+runs = 512
+
+[invariant]
+runs = 128
+depth = 64
+
+[rpc_endpoints]
+aevum = "https://rpc-test.qday.info"
+local = "http://127.0.0.1:8545"
+
+[etherscan]
+aevum = { key = "blockscout", chain = 44005, url = "https://explorer-test.qday.info/api" }
